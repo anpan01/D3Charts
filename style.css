@@ -1,0 +1,90 @@
+@import url("https://use.typekit.net/buj6cnb.css");
+
+@font-face {
+  font-family: 'Proxima Nova Extra Condensed';
+  src: url("https://use.typekit.net/buj6cnb.css");
+}
+
+html, body {
+  height: 100%;
+	font-family: proxima-nova-extra-condensed;
+}
+
+h1, h2, h3, h4, h5, h6 {
+	text-transform: uppercase; 
+}
+
+h1 {
+	font-size: 2.6em;
+}
+
+path {
+  stroke: #fff;
+}
+
+.total {
+  pointer-events: none;
+}
+
+/* legend */
+
+#legend {
+  line-height: 1.6em;
+}
+.legend {
+  font-size: 20px;
+  float: left;
+	margin-right:1em;
+	width: 100%;
+}
+div#legend .rect {
+  width: 20px;
+  height: 20px;
+  margin-right: 4px;
+  display: inline-block;
+}
+.clearfix::after { 
+   content: " ";
+   display: block; 
+   height: 0; 
+   clear: both;
+}
+rect {
+  stroke-width: 2;
+}
+
+div.tooltip {
+	position: absolute;
+	width: 200px;
+	height: auto;
+	padding: 10px;
+  display: none;
+	background-color: white;
+	-webkit-border-radius: 10px;
+	-moz-border-radius: 10px;
+	border-radius: 10px;
+	-webkit-box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.4);
+	-moz-box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.4);
+	box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.4);
+	pointer-events: none;
+}
+			
+div.tooltip p {
+	margin: 0;
+	font-size: 16px;
+	line-height: 20px;
+} 
+
+.legend {
+  width: 100%;
+  margin: 0 auto;
+}
+
+.chart {
+	text-align: center;
+}
+
+.chart-1 {
+	width: 100%;
+}
+
