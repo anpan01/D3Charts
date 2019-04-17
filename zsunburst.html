@@ -9,30 +9,15 @@
 	<title>Document</title>
 </head>
 <body>
-	<h1>Simple Bar Chart</h1>
-	<div class="barchart"></div>
-
+		<div class="chart">
+			<h1>Project Score Breakdown</h1>
+			<section class="chart-1">
+				<div id="chart"></div>
+				<div id="legend"></div>
+			</section>
+		</div>
 	<script src="https://code.jquery.com/jquery-3.2.1.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/4.11.0/d3.js"></script>
-	<!-- <script src="app.js"></script> -->
-	<script>
-	var data = [30, 86, 168, 281, 303, 365];
-
-	var t = d3.transition()
-    .duration(1600)
-    .ease(d3.easeLinear);
-
-	d3.select(".barchart")
-		.selectAll("div")
-		.data(data)
-			.enter()
-			.append("div")
-			.transition(t)
-			.style("width", function(d) { return d * 2 + "px"; })
-			.text(function(d) { return '$ ' + d; })
-
-			;
-
-	</script>
+	<script src="app.js"></script>
 </body>
 </html>

@@ -88,3 +88,12 @@ div.tooltip p {
 	width: 100%;
 }
 
+/* ========Bar Chart Tutorial======= */
+.barchart div {
+  font-size: 10px;
+  background-color: steelblue;
+  text-align: right;
+  padding: 3px;
+  margin: 1px;
+  color: white;
+}

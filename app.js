@@ -1,3 +1,4 @@
+
 // define json object
 var root = {
 	"name": "TOTAL",
@@ -136,10 +137,6 @@ var root = {
 		 .innerRadius(function(d) { return Math.max(0, y(d.y0)); })
 		 .outerRadius(function(d) { return Math.max(0, y(d.y1)); });
  
- //**********************
- //        TOOLTIP
- //**********************
- 
  // define tooltip
  var tooltip = d3.select('body') // select element in the DOM with id 'chart'
 	 .append('div').classed('tooltip', true); // append a div element to the element we've selected    
@@ -150,9 +147,6 @@ var root = {
  tooltip.append('div') // add divs to the tooltip defined above
 	 .attr('class', 'percent'); // add class 'percent' on the selection
  
- //**********************
- //        CHART
- //**********************
  // prep the data
  var root = d3.hierarchy(root);
  
@@ -205,10 +199,6 @@ var root = {
 	 });
  
  d3.select(self.frameElement).style("height", height + "px");
- 
- //**********************
- //        LEGEND
- //**********************
  
  // legend HTML
  var legendContainer = d3.select("#legend").append("div").classed("legends clearfix", true);
@@ -341,5 +331,4 @@ var root = {
 		 while (node.depth > 1) node = node.parent;
 		 return node;
  }
- // getting labels and titles
- 
+
