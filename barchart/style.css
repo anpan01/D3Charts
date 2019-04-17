@@ -1,0 +1,22 @@
+/* ========Bar Chart Tutorial======= */
+
+@import url("https://use.typekit.net/buj6cnb.css");
+
+@font-face {
+  font-family: 'Proxima Nova Extra Condensed';
+  src: url("https://use.typekit.net/buj6cnb.css");
+}
+
+html, body {
+  height: 100%;
+	font-family: proxima-nova-extra-condensed;
+}
+
+.barchart div {
+  font-size: 10px;
+  background-color: steelblue;
+  text-align: right;
+  padding: 3px;
+  margin: 1px;
+  color: white;
+}

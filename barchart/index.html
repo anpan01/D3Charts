@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<link rel="stylesheet" href="https://use.typekit.net/buj6cnb.css">
+	<link rel="stylesheet" href="style.css">
+	<title>Bar Chart</title>
+</head>
+<body>
+	<h1>Simple Bar Chart</h1>
+	<div class="barchart"></div>
+
+	<script src="https://code.jquery.com/jquery-3.2.1.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/4.11.0/d3.js"></script>
+	<!-- <script src="app.js"></script> -->
+	<script>
+	var data = [30, 86, 168, 281, 303, 365];
+
+	var t = d3.transition()
+    .duration(1600)
+    .ease(d3.easeLinear);
+
+	d3.select(".barchart")
+		.selectAll("div")
+		.data(data)
+			.enter()
+			.append("div")
+			.transition(t)
+			.style("width", function(d) { return d * 2 + "px"; })
+			.text(function(d) { return '$ ' + d; })
+
+			;
+
+	</script>
+</body>
+</html>
