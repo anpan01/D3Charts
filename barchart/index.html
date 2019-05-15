@@ -16,7 +16,8 @@
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/4.11.0/d3.js"></script>
 	<!-- <script src="app.js"></script> -->
 	<script>
-	var data = [30, 86, 168, 281, 303, 365];
+
+	var data = [99, 98, 70, 65, 50, 40, 30, 15, 8, 7.5, 7, 6, 5, 4, 3, 2, 1, 0, 0, 0];
 
 	var t = d3.transition()
     .duration(1600)
@@ -29,8 +30,7 @@
 			.append("div")
 			.transition(t)
 			.style("width", function(d) { return d * 2 + "px"; })
-			.text(function(d) { return '$ ' + d; })
-
+			.text(function(d) { return '0.' + d; })
 			;
 
 	</script>
