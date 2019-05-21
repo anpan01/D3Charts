@@ -1,3 +1,14 @@
+const colors = {
+	safety: "#435b90", 
+	preservation: "#914e92", 
+	congestion: "#e15069", 
+	economic: "#2abfc6", 
+	connectivity: "#f9a83b", 
+	environment: "#00a651", 
+	default: "#000000",
+	test: "#ef4450"
+}
+
 const margin = {top: 10, bottom: 10,  right: 30, left: 80};
 var width = 500 - margin.left - margin.right;
 var height = 500 - margin.top - margin.bottom;
@@ -19,16 +30,42 @@ var data = [
 		congestion_score: 20.8, 
 		economic_score: 10.4, 
 		connectivity_score: 2.3, 
-		environment_score: 1
+		environment_score: 3
 },
 	{
 		project_id: '5105-00-025',
-		safety_score: 3, 
+		safety_score: 20, 
 		preservation_score: 5.1, 
 		congestion_score: 23.8, 
 		economic_score: 13.4, 
 		connectivity_score: 2.13, 
 		environment_score: 14
+	},
+	{
+		project_id: '5105-00-000',
+		safety_score: 25, 
+		preservation_score: 25.1, 
+		congestion_score: 3.8, 
+		economic_score: 14, 
+		connectivity_score: 5.13, 
+		environment_score: 2
+	},
+	{
+		project_id: '0005-00-045',
+		safety_score: 10, 
+		preservation_score: 5.1, 
+		congestion_score: 3.8, 
+		economic_score: 13.4, 
+		connectivity_score: 1.13, 
+		environment_score: 4
+	},	{
+		project_id: '1805-02-0j8',
+		safety_score: 30, 
+		preservation_score: 25.1, 
+		congestion_score: 13.8, 
+		economic_score: 10.4, 
+		connectivity_score: 7.8, 
+		environment_score: 3
 	}
 ];
 
@@ -47,7 +84,7 @@ var y = d3.scaleBand()
 					//.paddingInner(0.05);
 var z = d3.scaleOrdinal()
 					.domain(keys)
-					.range(["#98abc5", "#8a89a6", "#7b6888", "#6b486b", "#a05d56", "#d0743c", "#ff8c00"]);
+					.range([colors.safety, colors.preservation, colors.congestion, colors.economic, colors.connectivity, colors.environment]);
 
 var x = d3.scaleLinear()
 					.domain([0, d3.max(data.map((d) => d.total))])
