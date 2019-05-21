@@ -9,29 +9,37 @@
 	<title>Bar Chart</title>
 </head>
 <body>
-	<h1>Simple Bar Chart</h1>
+	<h1 align="center">Learning D3 - Bar Charts</h1>
+	<h2>Simple Bar Chart</h2>
 	<div class="barchart"></div>
 
 	<script src="https://code.jquery.com/jquery-3.2.1.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/4.11.0/d3.js"></script>
+	<script src="https://d3js.org/d3.v5.min.js"></script>
 	<!-- <script src="app.js"></script> -->
 	<script>
-
-	var data = [99, 98, 70, 65, 50, 40, 30, 15, 8, 7.5, 7, 6, 5, 4, 3, 2, 1, 0, 0, 0];
-
-	var t = d3.transition()
-    .duration(1600)
-    .ease(d3.easeLinear);
-
-	d3.select(".barchart")
-		.selectAll("div")
-		.data(data)
+//graph one
+	const dataset = [12, 31, 22, 17, 25, 18, 29, 14, 9];
+	
+	const w = 400;
+	const h = 200;
+	
+	const svg = d3.select(".barchart")
+								.append("svg")
+								.attr("width", w)
+								.attr("height", h)
+								.style("background", "#f2f7f8");
+	
+	svg.selectAll("rect")
+			.data(dataset)
 			.enter()
-			.append("div")
-			.transition(t)
-			.style("width", function(d) { return d * 2 + "px"; })
-			.text(function(d) { return '0.' + d; })
-			;
+			.append("rect")
+			.attr("fill", "#93a63a")
+			.attr("x", (d, i) => i * 40)
+			.attr("y", (d, i) => {
+				return h - 3 * d
+			})
+			.attr("width", 30)
+			.attr("height", (d, i) => 5 * d);
 
 	</script>
 </body>
