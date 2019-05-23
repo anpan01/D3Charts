@@ -90,8 +90,6 @@ var x = d3.scaleLinear()
 					.domain([0, d3.max(data.map((d) => d.total))])
 					.range([0, width]);
 
-
-
 chart.append("g")
 			.attr("class", "y-axis")
 			.call(d3.axisLeft(y));
@@ -110,9 +108,11 @@ chart.selectAll('.chart')
 			//.attr("x", (d) => x(d[0]))
 			.attr('x', (d) => x(d[0]))
       .attr("width", (d) => x(d[1]) - x(d[0]))
-			.attr("height", y.bandwidth() - 30);
+			.attr("height", y.bandwidth() - 5);
 
+// adding label to the right of each bar
 chart.selectAll(".chart rect")
 		 .append('text')
 		 .attr('class', 'label')
-		 .text('hello');
+		 .text('hello')
+		 .style('font-size', '10px');
