@@ -54,9 +54,6 @@ var x = d3.scaleBand()
 					.domain([0, d3.max(data.map((d) => d.total))])
 					.range([height, 0]);
 
-
-console.log(y(20))
-
 var z = d3.scaleOrdinal()
 					.domain(keys)
 					.range(["#98abc5", "#8a89a6", "#7b6888", "#6b486b", "#a05d56", "#d0743c", "#ff8c00"]);
@@ -76,3 +73,4 @@ chart.selectAll('g')
       .attr("height", (d) => y(d[0]) - y(d[1]))
 			.attr("width", x.bandwidth() - 30);
 		
+

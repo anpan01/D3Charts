@@ -81,7 +81,7 @@ var s_data = d3.stack().keys(keys)(data);
 var y = d3.scaleBand()
 					.domain(data.map((d) => d.project_id))
 					.range([0, height]);
-					//.paddingInner(0.05);
+
 var z = d3.scaleOrdinal()
 					.domain(keys)
 					.range([colors.safety, colors.preservation, colors.congestion, colors.economic, colors.connectivity, colors.environment]);
