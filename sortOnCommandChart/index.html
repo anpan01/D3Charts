@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>Bar Chart</title>
+	<link rel="stylesheet" href="https://use.typekit.net/buj6cnb.css" />
+	<script src="https://code.jquery.com/jquery-3.2.1.js"></script>
+	<script src="https://d3js.org/d3.v5.min.js"></script>
+</head>
+<body>
+<style>
+	@font-face {
+		font-family:"proxima-nova-extra-condensed";
+		src:url("https://use.typekit.net/af/0dfb3d/00000000000000003b9b3082/27/l?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=n4&v=3") format("woff2"),url("https://use.typekit.net/af/0dfb3d/00000000000000003b9b3082/27/d?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=n4&v=3") format("woff"),url("https://use.typekit.net/af/0dfb3d/00000000000000003b9b3082/27/a?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=n4&v=3") format("opentype");
+		font-style:normal;font-weight:400;
+	}
+
+	body {
+		font-family: "proxima-nova-extra-condensed";
+		font-size: 1.4em;
+	}
+
+	button {
+		font-family: "proxima-nova-extra-condensed";
+		font-size: 1.4em;
+		text-transform: uppercase; 
+		font-weight: 600;
+		width: auto;
+		padding: .3em;
+		margin: 1em;
+		align-self: center;
+		color: white;
+		background: black;
+		border-radius: 5px;
+		border: none;
+	}
+
+	.weights {
+		text-align: center;
+	}
+</style>
+
+	<h1 align="center">Sorted Stacked Bar Chart</h1>
+	<div class="chart_container">
+			<h2>Criteria Weights</h2>
+			<svg class="s_chart"></svg>
+	</div>
+	<button id="submit_projectnum">Order by Project Name</button>
+	<div class="weights">
+		<h2>Set Weights</h2>
+		<label for="safety_score">Safety</label>
+		<input class="weights" id="safety_score" type="number" placeholder="16.66">
+
+		<label for="preservation_score">Preservation</label>
+		<input class="weights" id="preservation_score" type="number" placeholder="16.66">
+
+		<label for="congestion_score">Congestion</label>
+		<input class="weights" id="congestion_score" type="number" placeholder="16.66">
+
+		<label for="economic_score">Economic</label>
+		<input class="weights" id="economic_score" type="number" placeholder="16.66">
+
+		<label for="connectivity_score">Connectivity</label>
+		<input class="weights" id="connectivity_score" type="number" placeholder="16.66">
+
+		<label for="environment_score">Environment</label>
+		<input class="weights" id="environment_score" type="number" placeholder="16.66">
+		
+		<br />
+		<button id="submit_weights">Apply Weights</button>
+	</div>
+	<script src="app.js"></script>
+</body>

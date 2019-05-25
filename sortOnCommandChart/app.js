@@ -119,3 +119,67 @@
 		 .attr('x', (d) => x(d[0]))
 		 .attr("width", (d) => x(d[1]) - x(d[0]))
 		 .attr("height", y.bandwidth() - 5);
+
+$(function () {
+
+	$('#submit').on('click submit', function(){
+		var base = 16.667;
+
+		safety_weight = (parseInt($('#safety_score').val(), 2).isNaN() ? base : parseInt($('#safety_score').val(), 2));
+		preservation_weight = (parseInt($('#preservation_score').val(), 2).isNaN() ? base : parseInt($('#preservation_score').val(), 2));
+		congestion_weight = (parseInt($('#congestion_score').val(), 2).isNaN() ? base : parseInt($('#congestion_score').val(), 2));
+		economic_weight = (parseInt($('#economic_score').val(), 2).isNaN() ? base : parseInt($('#economic_score').val(), 2));
+		connectivity_weight = (parseInt($('#connectivity_score').val(), 2).isNaN() ? base : parseInt($('#connectivity_score').val(), 2));
+		environment_weight = (parseInt($('#environment_score').val(), 2).isNaN() ? base : parseInt($('#environment_score').val(), 2));
+
+		$('.s_chart').empty();
+
+		mult_data = data.map((d) => {
+			var safety_score = d.safety_score * safety_weight; 
+			var preservation_score = d.preservation_score * preservation_weight; 
+			var congestion_score = d.congestion_score * congestion_weight; 
+			var economic_score = d.economic_score * economic_weight; 
+			var connectivity_score = d.connectivity_score * connectivity_weight; 
+			var environment_score = d.environment_score * environment_weight; 
+			var total = d.safety_score + d.preservation_score + d.congestion_score + d.connectivity_score + d.environment_score;
+
+			return {safety_score, preservation_score, congestion_score, economic_score, connectivity_score, environment_score, total}
+		});
+
+		mult_data.sort(function(a, b) {
+			return d3.ascending(a.total, b.total);
+		});		
+
+		d3.stack().keys(keys)(mult_data);
+
+		var y1 = d3.scaleBand()
+		.domain(mult_data.map((d) => d.project_id))
+		.range([0, height]);
+
+		var x1 = d3.scaleLinear()
+		.domain([0, d3.max(mult_data.map((d) => d.total))])
+		.range([0, width]);
+
+
+		chart.append("g")
+		.attr("class", "y-axis")
+		.call(d3.axisLeft(y));
+
+		//function drawChart() {
+		chart.selectAll('.chart')
+		.data(mult_data)
+		.enter()
+		.append('g')
+		.attr("fill", (d) => z(d.key))
+		.selectAll("rect")
+		.data((d) => d)
+		.enter()
+		.append("rect")
+		.attr("y", (d) => y1(d.data.project_id))
+		//.attr("x", (d) => x(d[0]))
+		.attr('x', (d) => x1(d[0]))
+		.attr("width", (d) => x1(d[1]) - x1(d[0]))
+		.attr("height", y1.bandwidth() - 5);
+
+	});
+});
