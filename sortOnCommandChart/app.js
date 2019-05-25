@@ -1,3 +1,7 @@
+//set variables for chart
+//make a data manipulation function
+//make a draw chart function
+
 
 	var safety_weight;
 	var preservation_weight;
@@ -22,11 +26,11 @@
 	var height = 500 - margin.top - margin.bottom;
 
 	var chart = d3.select('.s_chart')
-	.attr('width', width + margin.left + margin.right)
-	.attr('height', height + margin.top + margin.bottom)
-	.append('g')
-	.attr('class', 'chart')
-	.attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
+		.attr('width', width + margin.left + margin.right)
+		.attr('height', height + margin.top + margin.bottom)
+		.append('g')
+		.attr('class', 'chart')
+		.attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
 	
 	var data = [
 	{
@@ -79,6 +83,33 @@
 		var total = d.safety_score + d.preservation_score + d.congestion_score + d.economic_score + d.connectivity_score + d.environment_score;
 		return {...d, total};
 	});
+
+	function sortData(data, isAscending){
+		var data1;
+		var data2;
+		var data3;
+
+		//manipulate new values each data object.
+		data1 = data.map((d) => {
+			var total = d.safety_score + d.preservation_score + d.congestion_score + d.economic_score + d.connectivity_score + d.environment_score;
+			return {...d, total};
+		});
+
+		//sort data
+		if (isAscending == true) {
+			var data2 = data1.sort(function(a, b) {
+				return d3.ascending(a.total, b.total);
+			});
+		} else {
+			var data2 = data1.sort(function(a, b) {
+				return d3.descending(a.total, b.total);
+			});
+		}
+
+		//stack data
+		var data3 = d3.stack().keys(keys)(data2);
+		
+	}
 
 	//function that sorts the bars.
 	var dataTotal = data.sort(function(a, b) {
