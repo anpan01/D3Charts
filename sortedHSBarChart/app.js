@@ -82,7 +82,7 @@
 
 	//function that sorts the bars.
 	var dataTotal = data.sort(function(a, b) {
-		return d3.ascending(a.total, b.total);
+		return d3.descending(a.total, b.total);
 	});
 	
 	//stacks data sometimes regerred to as "layers"
