@@ -110,6 +110,40 @@ var root = {
 	 }
 	]
  }
+ 
+ var root = {
+		"name": "TOTAL",
+		"color": '#435b90',
+		"children": [
+			// {
+			//  "name": "Safety",
+			//  "color": '#435b90',
+			//  "children": [
+				{"name": "Crash Rate",
+				 "color": '#678CDB',
+				 "children": [
+					 {"name": "Estimated Impact on Fatal and Serious Injury Crash Rate", "color": '#A9B9DB', "size": 3.142},
+					 {"name": "Estimated Total Crash Rate", "size": 3.142},
+				 ]
+				},
+				{"name": "Crash Count", 
+				 "color": '#A9B9DB',
+				 "children": [
+					 {"name": "Estimated Impact on Fatal and Serious Injury Crashes", "size": 3.142},
+					 {"name": "Estimated Total Crashes", "size": 3.142},
+				 ]
+				},
+				{"name": "Safety Project Classificiation", "size": 6.284, "color": '#2B3B5C', "children":[{"name": ""}]},
+				{"name": "Societal Project Classification", "size": 6.284, "color": '#2B3B5C', "children":[{"name": ""}]},
+				{"name": "Hurricane Evacuation Route", "size": 6.284, "color": '#2B3B5C', "children":[{"name": ""}]}
+			//  ]
+			// }
+		]
+}
+
+	
+
+
 
  // set width, height, and radius
  var width = 425,
