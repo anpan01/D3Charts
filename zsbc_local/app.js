@@ -176,36 +176,35 @@ var svg = d3.select("#chart").append("svg")
 	.append("g") // append g element
 	.attr("transform", "translate(" + width / 2 + "," + (height / 2) + ")");
 
+var group = svg.select
+
+
+
 // redraw(root);
 var path = svg.selectAll("path")
 	.data(partition(root).descendants()) // path for each descendant
-	.enter().append("g")
-	.attr('class','arc')
+	.enter()
 		.append("path")
 		.attr("d", arc) // draw arcs
 		.attr("class", "path")
 		.style("fill", function (d) { return (d.children ? d : d.parent).data.color; })
+
 		.on("click", click)
-		.append("text")
-			.attr("x", 0)
-			.attr("y", 15)
-			.style("fill", "black")
-			.text("hi");
-	// adds tool tip on mouse over
-	// .on('mouseover', function (d) {
-	// 	var percent = d.value / total; // calculate percent
-	// 	tooltip.select('.label').html("<h4>" + d.data.name + "<h4>"); // set current label           
-	// 	tooltip.select('.count').html("Percent: " + d.value.toFixed(4) + "%"); // set current count            
-	// 	tooltip.select('.percent').html("Weight: " + percent.toFixed(4)); // set percent calculated above          
-	// 	tooltip.style('display', 'block'); // set display
-	// })
-	// .on('mouseout', function () { // when mouse leaves div                        
-	// 	tooltip.style('display', 'none'); // hide tooltip for that element
-	// })
-	// .on('mousemove', function (d) { // when mouse moves                  
-	// 	tooltip.style('top', (d3.event.layerY + 10) + 'px'); // always 10px below the cursor
-	// 	tooltip.style('left', (d3.event.layerX + 10) + 'px'); // always 10px to the right of the mouse
-	// });
+//	adds tool tip on mouse over
+	.on('mouseover', function (d) {
+		var percent = d.value / total; // calculate percent
+		tooltip.select('.label').html("<h4>" + d.data.name + "<h4>"); // set current label           
+		tooltip.select('.count').html("Percent: " + d.value.toFixed(4) + "%"); // set current count            
+		tooltip.select('.percent').html("Weight: " + percent.toFixed(4)); // set percent calculated above          
+		tooltip.style('display', 'block'); // set display
+	})
+	.on('mouseout', function () { // when mouse leaves div                        
+		tooltip.style('display', 'none'); // hide tooltip for that element
+	})
+	.on('mousemove', function (d) { // when mouse moves                  
+		tooltip.style('top', (d3.event.layerY + 10) + 'px'); // always 10px below the cursor
+		tooltip.style('left', (d3.event.layerX + 10) + 'px'); // always 10px to the right of the mouse
+	});
 
 d3.select(self.frameElement).style("height", height + "px");
 
