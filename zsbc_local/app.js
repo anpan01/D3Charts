@@ -6,26 +6,33 @@ var root = {
 		{
 			"name": "Safety",
 			"color": '#435b90',
+			// "size": "31.42",
 			"children": [
 				{
 					"name": "Crash Rate",
 					"color": '#678CDB',
 					"children": [
-						{ "name": "Estimated Impact on Fatal and Serious Injury Crash Rate", "color": '#A9B9DB', "size": 3.142 },
-						{ "name": "Estimated Total Crash Rate", "size": 3.142 },
+						{ "name": "Estimated Impact on Fatal and Serious Injury Crash Rate", "color": '#A9B9DB', "size": 3.928 },
+						{ "name": "Estimated Total Crash Rate", "size": 3.928 },
 					]
 				},
 				{
 					"name": "Crash Count",
 					"color": '#A9B9DB',
 					"children": [
-						{ "name": "Estimated Impact on Fatal and Serious Injury Crashes", "size": 3.142 },
-						{ "name": "Estimated Total Crashes", "size": 3.142 },
+						{ "name": "Estimated Impact on Fatal and Serious Injury Crashes", "size": 3.928 },
+						{ "name": "Estimated Total Crashes", "size": 3.928 },
 					]
 				},
-				{ "name": "Safety Project Classificiation", "size": 6.284, "color": '#2B3B5C' },
-				{ "name": "Societal Project Classification", "size": 6.284, "color": '#2B3B5C' },
-				{ "name": "Hurrican Evacuation Route", "size": 6.284, "color": '#2B3B5C' }
+				{
+					"name": "Safety Categorization",
+					"color": "#ceecf0",
+					"children": [
+						{ "name": "Hurricane Evacuation Route", "size": 3.928, "color": '#2B3B5C' },
+						{ "name": "Safety Project Classification", "size": 3.928, "color": '#2B3B5C'}
+					]
+				},
+				{ "name": "Societal Project Classification", "size": 7.855, "color": '#2B3B5C' }
 			]
 		},
 		{
@@ -60,10 +67,10 @@ var root = {
 					"name": "Congestion Reduction",
 					"color": '#E697A4',
 					"children": [
-						{ "name": "Benefit Congestion Index - Auto", "size": 4.805 },
-						{ "name": "Benefit Congestion Index - Truck", "size": 4.805 },
-						{ "name": "Normalized Congestion Index - Auto", "size": 4.805 },
-						{ "name": "Normalized Congestion Index - Truck", "size": 4.805 }
+						{ "name": "Benefit Congestion Index - Auto", "size": 9.610 },
+						{ "name": "Benefit Congestion Index - Truck", "size": 9.610 }
+						// { "name": "Normalized Congestion Index - Auto", "size": 4.805 },
+						// { "name": "Normalized Congestion Index - Truck", "size": 4.805 }
 					]
 				}
 			]
@@ -152,7 +159,7 @@ tooltip.append('div') // add divs to the tooltip defined above
 var root = d3.hierarchy(root);
 
 // calculate total
-var total = 0;
+var total = 100;
 
 
 root.sum(function (d) {
@@ -172,25 +179,33 @@ var svg = d3.select("#chart").append("svg")
 // redraw(root);
 var path = svg.selectAll("path")
 	.data(partition(root).descendants()) // path for each descendant
-	.enter().append("path")
-	.attr("d", arc) // draw arcs
-	.attr("class", "path")
-	.style("fill", function (d) { return (d.children ? d : d.parent).data.color; })
-	.on("click", click)
-	.on('mouseover', function (d) {
-		var percent = d.value / total; // calculate percent
-		tooltip.select('.label').html("<h4>" + d.data.name + "<h4>"); // set current label           
-		tooltip.select('.count').html("Percent: " + d.value.toFixed(2) + "%"); // set current count            
-		tooltip.select('.percent').html("Weight: " + percent.toFixed(4)); // set percent calculated above          
-		tooltip.style('display', 'block'); // set display   
-	})
-	.on('mouseout', function () { // when mouse leaves div                        
-		tooltip.style('display', 'none'); // hide tooltip for that element
-	})
-	.on('mousemove', function (d) { // when mouse moves                  
-		tooltip.style('top', (d3.event.layerY + 10) + 'px'); // always 10px below the cursor
-		tooltip.style('left', (d3.event.layerX + 10) + 'px'); // always 10px to the right of the mouse
-	});
+	.enter().append("g")
+	.attr('class','arc')
+		.append("path")
+		.attr("d", arc) // draw arcs
+		.attr("class", "path")
+		.style("fill", function (d) { return (d.children ? d : d.parent).data.color; })
+		.on("click", click)
+		.append("text")
+			.attr("x", 0)
+			.attr("y", 15)
+			.style("fill", "black")
+			.text("hi");
+	// adds tool tip on mouse over
+	// .on('mouseover', function (d) {
+	// 	var percent = d.value / total; // calculate percent
+	// 	tooltip.select('.label').html("<h4>" + d.data.name + "<h4>"); // set current label           
+	// 	tooltip.select('.count').html("Percent: " + d.value.toFixed(4) + "%"); // set current count            
+	// 	tooltip.select('.percent').html("Weight: " + percent.toFixed(4)); // set percent calculated above          
+	// 	tooltip.style('display', 'block'); // set display
+	// })
+	// .on('mouseout', function () { // when mouse leaves div                        
+	// 	tooltip.style('display', 'none'); // hide tooltip for that element
+	// })
+	// .on('mousemove', function (d) { // when mouse moves                  
+	// 	tooltip.style('top', (d3.event.layerY + 10) + 'px'); // always 10px below the cursor
+	// 	tooltip.style('left', (d3.event.layerX + 10) + 'px'); // always 10px to the right of the mouse
+	// });
 
 d3.select(self.frameElement).style("height", height + "px");
 
@@ -216,7 +231,7 @@ svg.append("text")
 	.attr("text-anchor", "middle")
 	.attr('font-size', '4em')
 	.attr('y', 20)
-	.text(parseFloat(total.toFixed(2)));
+	.text(parseFloat(total.toFixed(2)) + "%");
 
 // redraw on disabled category
 function redraw(d) {
@@ -251,7 +266,7 @@ function click(d) {
 		})
 		.selectAll("path")
 		.attrTween("d", function (d) { return function () { return arc(d); }; });
-	d3.select(".total").text(d.value.toFixed(2) + "%");
+	d3.select(".total").text(d.value.toFixed(0) === "100" ? "100%" : d.value.toFixed(2) + "%");
 }
 
 
