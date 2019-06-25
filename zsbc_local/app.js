@@ -170,28 +170,34 @@ root.sum(function (d) {
 });
 
 // define SVG element
-var svg = d3.select("#chart").append("svg")
+const svg = d3.select("#chart").append("svg")
 	.attr("width", width) // set width
 	.attr("height", height) // set height
 	.append("g") // append g element
 	.attr("transform", "translate(" + width / 2 + "," + (height / 2) + ")");
 
-var group = svg.select
-
-
-
 // redraw(root);
-var path = svg.selectAll("path")
+//technically group
+const group = svg.selectAll("g")
 	.data(partition(root).descendants()) // path for each descendant
 	.enter()
-		.append("path")
-		.attr("d", arc) // draw arcs
-		.attr("class", "path")
-		.style("fill", function (d) { return (d.children ? d : d.parent).data.color; })
+		.append("g")
+		.attr("class", "shape");
 
-		.on("click", click)
+var xpos = d3.scaleLinear()
+	.range([0, 2 * Math.PI])
+	.clamp(true);
+
+var ypos = d3.scaleSqrt()
+	.range([radius*.1, radius]);
+
+group.append("title")
+.text(function (d) { return d.data.name })
+.attr("x", xpos)
+.attr("y", ypos);
+
 //	adds tool tip on mouse over
-	.on('mouseover', function (d) {
+	group.on('mouseover', function (d) {
 		var percent = d.value / total; // calculate percent
 		tooltip.select('.label').html("<h4>" + d.data.name + "<h4>"); // set current label           
 		tooltip.select('.count').html("Percent: " + d.value.toFixed(4) + "%"); // set current count            
@@ -206,25 +212,39 @@ var path = svg.selectAll("path")
 		tooltip.style('left', (d3.event.layerX + 10) + 'px'); // always 10px to the right of the mouse
 	});
 
-d3.select(self.frameElement).style("height", height + "px");
+const path = group.append("path")
+		.attr("d", arc) // draw arcs
+		.attr("class", "path")
+		.style("fill", function (d) { 
+			return (d.children ? d : d.parent).data.color; 
+		})
+		.on("click", click);
+//d3.select(self.frameElement).style("height", height + "px");
+
+group.append("text")
+.text(function (d) { return d.data.name })
+.style("position", "relative")
+.attr("y", 20)
+.attr("x", 20);
 
 // legend HTML
-var legendContainer = d3.select("#legend").append("div").classed("legends clearfix", true);
+// var legendContainer = d3.select("#legend").append("div").classed("legends clearfix", true);
 
-var legend = legendContainer.selectAll(".legend")
-	.data(root.children)
-	.enter()
-	.append('div') // replace placeholders with g elements
-	.attr('class', 'legend'); // each g is given a legend class
+// var legend = legendContainer.selectAll(".legend")
+// 	.data(root.children)
+// 	.enter()
+// 	.append('div') // replace placeholders with g elements
+// 	.attr('class', 'legend'); // each g is given a legend class
 
-rect = legend.append('div').classed('rect', true) // append rectangle squares to legend
-	.style('background-color', function (d) { return d.data.color; })
-	.style('border', function (d) { return '1px solid'; });
+// rect = legend.append('div').classed('rect', true) // append rectangle squares to legend
+// 	.style('background-color', function (d) { return d.data.color; })
+// 	.style('border', function (d) { return '1px solid'; });
 
-// adding text to legend
-legend.append('span')
-	.text(function (d) { return d.data.name; })
+// // adding text to legend
+// legend.append('span')
+// 	.text(function (d) { return d.data.name; })
 
+//appends the total in the middle of the chart after the chart has been drawn. 
 svg.append("text")
 	.attr("class", "total")
 	.attr("text-anchor", "middle")
@@ -265,7 +285,15 @@ function click(d) {
 		})
 		.selectAll("path")
 		.attrTween("d", function (d) { return function () { return arc(d); }; });
+		//making this round up to 100% for just showing purposes.
 	d3.select(".total").text(d.value.toFixed(0) === "100" ? "100%" : d.value.toFixed(2) + "%");
 }
 
+
+function computeTextRotation(d) {
+	var angle = (d.x0 + d.x1) / Math.PI * 90;
+	// Avoid upside-down labels
+	return (angle < 120 || angle > 270) ? angle : angle + 180;  // labels as rims
+	//return (angle < 180) ? angle - 90 : angle + 90;  // labels as spokes
+}
 
