@@ -1,4 +1,3 @@
-// define json object
 var root = {
 	"name": "TOTAL",
 	"color": "#FFF",
@@ -128,13 +127,17 @@ var root = {
 // set width, height, and radius
 var width = 425,
 	height = 425,
-	radius = (Math.min(width, height) / 2); // lowest number divided by 2. Then subtract 10
+	radius = (Math.min(width, height) / 2) - 10; // lowest number divided by 2. Then subtract 10
 
 var x = d3.scaleLinear() // continuous scale. preserves proportional differences 
 	.range([0, 2 * Math.PI]); // setting range from 0 to 2 * circumference of a circle 
 
 var y = d3.scaleSqrt() // continuous power scale 
 	.range([0, radius]); // setting range from 0 to radius 
+
+var y1 = d3.scaleLinear()
+	.range([0, radius]);
+
 
 var partition = d3.partition(); // subdivides layers 
 
@@ -184,17 +187,9 @@ const group = svg.selectAll("g")
 		.append("g")
 		.attr("class", "shape");
 
-var xpos = d3.scaleLinear()
-	.range([0, 2 * Math.PI])
-	.clamp(true);
-
-var ypos = d3.scaleSqrt()
-	.range([radius*.1, radius]);
-
 group.append("title")
-.text(function (d) { return d.data.name })
-.attr("x", xpos)
-.attr("y", ypos);
+.text(function (d) { return d.data.name });
+
 
 //	adds tool tip on mouse over
 	group.on('mouseover', function (d) {
@@ -212,7 +207,7 @@ group.append("title")
 		tooltip.style('left', (d3.event.layerX + 10) + 'px'); // always 10px to the right of the mouse
 	});
 
-const path = group.append("path")
+var path = group.append("path")
 		.attr("d", arc) // draw arcs
 		.attr("class", "path")
 		.style("fill", function (d) { 
@@ -221,28 +216,32 @@ const path = group.append("path")
 		.on("click", click);
 //d3.select(self.frameElement).style("height", height + "px");
 
-group.append("text")
-.text(function (d) { return d.data.name })
-.style("position", "relative")
-.attr("y", 20)
-.attr("x", 20);
+// var text = group.append("text")
+// .text(function (d) { 
+// 	return d.data.name 
+// })
+// .attr("x", function(d, i) {
+// 		return (d.children ? d.children[i] : d);
+// })
+// .attr("y", function(d, i) {
+// 	return y((d.children ? d.children[i] : d).y0);
+// });
 
-// legend HTML
-// var legendContainer = d3.select("#legend").append("div").classed("legends clearfix", true);
+var text = group.append("text")
+	.attr("transform", function(d) { return "rotate(" + computeTextRotation(d) + ")"; })
+	.attr("x", 
+		function(d, i) { 
+			return y1(d.y1); 
+		})
+		//.attr("y", function(d) { return x(d.y0); })
+		// .attr("y", 
+		// function(d, i) { 
+		// 	return y(d.x1); 
+		// })
+	.attr("dx", "6") // margin
+	.attr("dy", ".35em") // vertical-align
+	.text(function(d) { return d.data.name; });
 
-// var legend = legendContainer.selectAll(".legend")
-// 	.data(root.children)
-// 	.enter()
-// 	.append('div') // replace placeholders with g elements
-// 	.attr('class', 'legend'); // each g is given a legend class
-
-// rect = legend.append('div').classed('rect', true) // append rectangle squares to legend
-// 	.style('background-color', function (d) { return d.data.color; })
-// 	.style('border', function (d) { return '1px solid'; });
-
-// // adding text to legend
-// legend.append('span')
-// 	.text(function (d) { return d.data.name; })
 
 //appends the total in the middle of the chart after the chart has been drawn. 
 svg.append("text")
@@ -264,7 +263,7 @@ function redraw(d) {
 				yr = d3.interpolate(y.range(), [d.y0 ? (radius / 2) : 0, radius]);
 			return function (t) { x.domain(xd(t)); y.domain(yd(t)).range(yr(t)); };
 		})
-		.selectAll("path")
+		.selectAll("g")
 		.attrTween("d", function (d) { return function () { return arc(d); }; });
 
 	//d3.select(".total").text(d.value.toFixed(0) + "%");
