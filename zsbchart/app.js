@@ -1,146 +1,128 @@
-
-// define json object
 var root = {
 	"name": "TOTAL",
 	"color": "#FFF",
 	"children": [
-	 {
-		"name": "Safety",
-		"color": '#435b90',
-		"children": [
-		 {"name": "Crash Rate",
-			"color": '#678CDB',
+		{
+			"name": "Safety",
+			"color": '#435b90',
+			// "size": "31.42",
 			"children": [
-				{"name": "Estimated Impact on Fatal and Serious Injury Crash Rate", "color": '#A9B9DB', "size": 3.142},
-				{"name": "Estimated Total Crash Rate", "size": 3.142},
+				{
+					"name": "Crash Rate",
+					"color": '#678CDB',
+					"children": [
+						{ "name": "Estimated Impact on Fatal and Serious Injury Crash Rate", "color": '#A9B9DB', "size": 3.928 },
+						{ "name": "Estimated Total Crash Rate", "size": 3.928 },
+					]
+				},
+				{
+					"name": "Crash Count",
+					"color": '#A9B9DB',
+					"children": [
+						{ "name": "Estimated Impact on Fatal and Serious Injury Crashes", "size": 3.928 },
+						{ "name": "Estimated Total Crashes", "size": 3.928 },
+					]
+				},
+				{
+					"name": "Safety Categorization",
+					"color": "#ceecf0",
+					"children": [
+						{ "name": "Hurricane Evacuation Route", "size": 3.928, "color": '#2B3B5C' },
+						{ "name": "Safety Project Classification", "size": 3.928, "color": '#2B3B5C'}
+					]
+				},
+				{ "name": "Societal Project Classification", "size": 7.855, "color": '#2B3B5C' }
 			]
-		 },
-		 {"name": "Crash Count", 
-			"color": '#A9B9DB',
+		},
+		{
+			"name": "Preservation",
+			"color": '#914e92',
 			"children": [
-				{"name": "Estimated Impact on Fatal and Serious Injury Crashes", "size": 3.142},
-				{"name": "Estimated Total Crashes", "size": 3.142},
+				{
+					"name": "Bridge Condition",
+					"color": '#DC76DE',
+					"children": [
+						{ "name": "Deck Area Receiving Preventative Maintenance", "size": 5.2125 },
+						{ "name": "Reduction in Structrually Deficient Deck Area", "size": 5.2125 }
+					]
+				},
+				{
+					"name": "Pavement Condition",
+					"color": '#DDB8DE',
+					"children": [
+						{ "name": "Lane Miles Receiving Maintenance (By Distress Score)", "size": 2.606 },
+						{ "name": "Reduction in Poor Lane Miles(By Distress Score)", "size": 2.606 },
+						{ "name": "Lane Miles Receiving Preventative Maintenance (By Ride Score)", "size": 2.606 },
+						{ "name": "Reduction in Poor Lane Miles (By Ride Score)", "size": 2.606 }
+					]
+				},
 			]
-		 },
-		 {"name": "Safety Project Classificiation", "size": 6.284, "color": '#2B3B5C'},
-		 {"name": "Societal Project Classification", "size": 6.284, "color": '#2B3B5C'},
-		 {"name": "Hurrican Evacuation Route", "size": 6.284, "color": '#2B3B5C'}
-		]
-	 },
-	 {
-		"name": "Preservation",
-		"color": '#914e92',
-		"children": [
-		 {"name": "Bridge Condition",
-			"color": '#DC76DE',
+		},
+		{
+			"name": "Congestion",
+			"color": '#e15069',
 			"children": [
-				{"name":"Deck Area Receiving Preventative Maintenance", "size": 5.2125},
-				{"name":"Reduction in Structrually Deficient Deck Area", "size": 5.2125}
+				{
+					"name": "Congestion Reduction",
+					"color": '#E697A4',
+					"children": [
+						{ "name": "Benefit Congestion Index - Auto", "size": 9.610 },
+						{ "name": "Benefit Congestion Index - Truck", "size": 9.610 }
+						// { "name": "Normalized Congestion Index - Auto", "size": 4.805 },
+						// { "name": "Normalized Congestion Index - Truck", "size": 4.805 }
+					]
+				}
 			]
-		 },
-		 {"name": "Pavement Condition", 
-			"color": '#DDB8DE',
-			"children":[
-				{"name":"Lane Miles Receiving Maintenance (By Distress Score)", "size": 2.606},
-				{"name":"Reduction in Poor Lane Miles(By Distress Score)", "size": 2.606},
-				{"name":"Lane Miles Receiving Preventative Maintenance (By Ride Score)", "size": 2.606},
-				{"name":"Reduction in Poor Lane Miles (By Ride Score)", "size": 2.606}
-			]
-		 },
-		]
-	 },
-	 {
-		"name": "Congestion",
-		"color": '#e15069',
-		"children": [
-		 {"name": "Congestion Reduction",
-			"color":'#E697A4',
+		},
+		{
+			"name": "Connectivity",
+			"color": '#f9a83b',
 			"children": [
-				{"name": "Benefit Congestion Index - Auto", "size": 4.805},
-				{"name": "Benefit Congestion Index - Truck", "size": 4.805},
-				{"name": "Normalized Congestion Index - Auto", "size": 4.805},
-				{"name": "Normalized Congestion Index - Truck", "size": 4.805}
+				{
+					"name": "Enhanced Connectivity",
+					"color": '#FBC987',
+					"children": [
+						{ "name": "Truck System Route", "size": 3.372 },
+						{ "name": "Access and Reliability", "size": 3.372 },
+						{ "name": "Intermodal Connector", "size": 3.372 },
+						{ "name": "Lane Miles of New Connectivity", "size": 3.372 }
+					]
+				}
 			]
-		 }
-		]
-	 },
-	 {
-		"name": "Connectivity",
-		"color": '#f9a83b',
-		"children": [
-		 {"name": "Enhanced Connectivity",
-			"color": '#FBC987',
+		},
+		{
+			"name": "Economic",
+			"color": '#2abfc6',
 			"children": [
-				{"name": "Truck System Route", "size": 3.372},
-				{"name": "Access and Reliability", "size": 3.372},
-				{"name": "Intermodal Connector", "size": 3.372},
-				{"name": "Lane Miles of New Connectivity", "size": 3.372}
+				{
+					"name": "Economic Importance",
+					"color": '#6ACBD0',
+					"children": [
+						{ "name": "National Highway System Route (NHS)", "size": 2.455 },
+						{ "name": "National Highway Freight Network (NHFN)", "size": 2.455 }
+					]
+				},
+				{
+					"name": "System Usage",
+					"color": '#1F8E94',
+					"children": [
+						{ "name": "Base ADT", "size": 1.637 },
+						{ "name": "Base ADTT", "size": 1.637 },
+						{ "name": "Energy Sector Route", "size": 1.637 }
+					]
+				},
 			]
-		 }
-		]
-	 },
-	 {
-		"name": "Economic",
-		"color": '#2abfc6',
-		"children": [
-		 {"name": "Economic Importance",
-			"color": '#6ACBD0',
+		},
+		{
+			"name": "Environment",
+			"color": '#00a651',
+			"size": 5.21,
 			"children": [
-				{"name":"National Highway System Route (NHS)", "size": 2.455},
-				{"name":"National Highway Freight Network (NHFN)", "size": 2.455}
+				{ "name": "Environmental" }
 			]
-		 },
-		 {"name": "System Usage",
-			"color": '#1F8E94',
-			"children":[
-				{"name": "Base ADT", "size": 1.637},
-				{"name": "Base ADTT", "size": 1.637},
-				{"name": "Energy Sector Route", "size": 1.637}
-			]
-		 },
-		]
-	 },
-	 {
-		"name": "Environment",
-		"color": '#00a651',
-		 "size": 5.21,
-		"children": [
-		 {"name": "Environmental"}
-		]
-	 }
+		}
 	]
- }
- 
- var root = {
-		"name": "TOTAL",
-		"color": '#435b90',
-		"children": [
-			// {
-			//  "name": "Safety",
-			//  "color": '#435b90',
-			//  "children": [
-				{"name": "Crash Rate",
-				 "color": '#678CDB',
-				 "children": [
-					 {"name": "Estimated Impact on Fatal and Serious Injury Crash Rate", "color": '#A9B9DB', "size": 3.142},
-					 {"name": "Estimated Total Crash Rate", "size": 3.142},
-				 ]
-				},
-				{"name": "Crash Count", 
-				 "color": '#A9B9DB',
-				 "children": [
-					 {"name": "Estimated Impact on Fatal and Serious Injury Crashes", "size": 3.142},
-					 {"name": "Estimated Total Crashes", "size": 3.142},
-				 ]
-				},
-				{"name": "Safety Project Classificiation", "size": 6.284, "color": '#2B3B5C', "children":[{"name": ""}]},
-				{"name": "Societal Project Classification", "size": 6.284, "color": '#2B3B5C', "children":[{"name": ""}]},
-				{"name": "Hurricane Evacuation Route", "size": 6.284, "color": '#2B3B5C', "children":[{"name": ""}]}
-			//  ]
-			// }
-		]
 }
-
 	
 
 
@@ -185,16 +167,16 @@ var root = {
  var root = d3.hierarchy(root);
  
  // calculate total
- var total = 0
+ var total = 100;
  
  // must call sum on the hierarchy first
  // and as we're doing that, total up the sum of the chart
- root.sum(function(d) {
-	 if (d.size) {
-		 total += d.size
-	 }
-	 return d.size; 
- });
+ root.sum(function (d) {
+	if (typeof d.size !== 'undefined'){
+		return parseFloat(d.size.toFixed(2));
+	}
+	return d.size; 
+});
  
  // enable data as true true
  root.data.children.forEach(function(d){
@@ -306,7 +288,7 @@ var root = {
 		.attr("text-anchor", "middle")
 		.attr('font-size', '4em')
 		.attr('y', 20)
-		.text(total);
+		.text(total + "%");
  
  //**********************
  //       FUNCTIONS
@@ -339,7 +321,7 @@ var root = {
 		 .selectAll("path")
 			 .attrTween("d", function(d) { return function() { return arc(d); }; });
 	 
-	 d3.select(".total").text(d.value);
+	 d3.select(".total").text(d.total);
  }
  
  // zoom on click
@@ -357,7 +339,7 @@ var root = {
 			 })
 		 .selectAll("path")
 			 .attrTween("d", function(d) { return function() { return arc(d); }; });
-	 d3.select(".total").text(d.value);
+		d3.select(".total").text(d.value.toFixed(0) === "100" ? "100%" : d.value.toFixed(2) + "%");
  }
  
  // find ancestors
