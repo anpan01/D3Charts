@@ -84,6 +84,15 @@ div.tooltip p {
 	text-align: center;
 }
 
-.chart-1 {
-	width: 100%;
+
+.shape {
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow:"";
+}
+
+.shape text textPath{
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: "";
 }
