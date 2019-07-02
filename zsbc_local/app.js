@@ -9,29 +9,29 @@ var p_score = {
 			"children": [
 				{
 					"name": "Crash Rate",
-					"color": '#678CDB',
+					"color": '#374B75',
 					"children": [
-						{ "name": "Estimated Impact on Fatal and Serious Injury Crash Rate", "color": '#A9B9DB', "size": 3.928 },
-						{ "name": "Estimated Total Crash Rate", "size": 3.928 },
+						{ "name": "Estimated Impact on Fatal and Serious Injury Crash Rate", "color": '#A9B9DB', "size": 3.928, "color":"#598ABD" },
+						{ "name": "Estimated Total Crash Rate", "size": 3.928, "color": "#B6E0FF"},
 					]
 				},
 				{
 					"name": "Crash Count",
-					"color": '#A9B9DB',
+					"color": "#678CDB",
 					"children": [
-						{ "name": "Estimated Impact on Fatal and Serious Injury Crashes", "size": 3.928 },
-						{ "name": "Estimated Total Crashes", "size": 3.928 },
+						{ "name": "Estimated Impact on Fatal and Serious Injury Crashes", "size": 3.928, "color": "#59C8ED" },
+						{ "name": "Estimated Total Crashes", "size": 3.928, "color": "#91CFFA" },
 					]
 				},
 				{
 					"name": "Safety Categorization",
-					"color": "#ceecf0",
+					"color": "25324F",
 					"children": [
 						{ "name": "Hurricane Evacuation Route", "size": 3.928, "color": '#2B3B5C' },
 						{ "name": "Safety Project Classification", "size": 3.928, "color": '#2B3B5C'}
 					]
 				},
-				{ "name": "Societal Project Classification", "size": 7.855, "color": '#2B3B5C' }
+				{ "name": "Societal Project Classification", "size": 7.855, "color": '#598ABD' }
 			]
 		},
 		{
@@ -66,8 +66,8 @@ var p_score = {
 					"name": "Congestion Reduction",
 					"color": '#E697A4',
 					"children": [
-						{ "name": "Benefit Congestion Index - Auto", "size": 9.610 },
-						{ "name": "Benefit Congestion Index - Truck", "size": 9.610 }
+						{ "name": "Benefit Congestion Index - Auto", "size": 9.610, "color": "#E697A4" },
+						{ "name": "Benefit Congestion Index - Truck", "size": 9.610, "color": "#AD3E51" }
 						// { "name": "Normalized Congestion Index - Auto", "size": 4.805 },
 						// { "name": "Normalized Congestion Index - Truck", "size": 4.805 }
 					]
@@ -135,10 +135,10 @@ var y = d3.scaleSqrt().range([0, radius]);
 var partition = d3.partition();
 
 var arc = d3.arc()
-	.startAngle((d) => {return Math.max(0, Math.min(2 * Math.PI, x(d.x0))); })
-	.endAngle((d) => {return Math.max(0, Math.min(2 * Math.PI, x(d.x1))); })
-	.innerRadius((d) =>{return Math.max(0, y(d.y0)); })
-	.outerRadius((d) =>{return Math.max(0, y(d.y1)); });
+		 .startAngle(function(d) { return Math.max(0, Math.min(2 * Math.PI, x(d.x0))); })
+		 .endAngle(function(d) { return Math.max(0, Math.min(2 * Math.PI, x(d.x1))); })
+		 .innerRadius(function(d) { return Math.max(0, y(d.y0)); })
+		 .outerRadius(function(d) { return Math.max(0, y(d.y1)); });
 
 var root = d3.hierarchy(p_score);
 
@@ -148,7 +148,6 @@ root.sum(function (d) {
 	}
 	return d.size; 
 });
- 
 
 root.data.children.forEach((d) => {	d.enabled = true;});
 
@@ -159,91 +158,147 @@ var svg = d3.select('.chart').append("svg")
 	.attr("id", "wrapper")
 	.attr("transform", "translate(" + width / 2 + "," + (height / 2) + ")");
 
+//creating the tooltip body
+var tooltip = d3.select('body')
+	.append('div').classed('tooltip', true);
+tooltip.append('div')
+	.attr('class', 'label');
+tooltip.append('div')
+	.attr('class', 'count');
+tooltip.append('div')
+	.attr('class', 'percent');
 
-var arcGroup = svg.selectAll('.wrapper')
+var arc_path = svg.selectAll('.arc')
 	.data(partition(root).descendants())
-	.enter()
-	.append("g")
-	.attr("class", "arc_group");
-
-var svg_arc = arcGroup.append("path")
-	.attr("d", arc) // draw arcs
+	.enter().append("path")
 	.attr("class", "arc")
-	.attr("id", (d) => {return d.data.name + "_arc"})
-	.style("fill",  (d) => {return (d.children ? d : d.parent).data.color;})
-	.on("click", click);
+	.attr("d", arc) // draw arcs
+	.attr("id", (d, i) => {return i + "_arc"})
+	.style("cursor", "pointer")
+	.style("fill",  (d) => {
+			return d.data.color ? d.data.color : d.parent.data.color;
+	})
+	.on("click", click)
+	.each(function(d,i) {
+		var firstArcSection = /(^.+?)L/;
+		var p = d3.select(this).attr("d");
 
-// var hidden_arc = arcGroup.append("path")
-// 	.attr("class", "hidden_arc")
-// 	.attr("id", (d) => {return d.data.name + "_hidden_arc"})
-// 	.style("fill", "none")
-// 	.on("click", click)
-// 	.each((d, i) => {
-// 		var firstArc = RegExp("/(^.+?)L/","g");
-// 		var newArc =  firstArc.exec( d3.select(this).attr("d"));
-// 		if (d.endAngle > 90 * Math.PI/180) {
-// 			var startLoc 	= RegExp('/M(.*?)A/'),
-// 				middleLoc 	= RegExp('/A(.*?)0 0 1/'),
-// 				endLoc 		= RegExp('/0 0 1 (.*?)$/');
-// 			var newStart = endLoc.exec( newArc )[1];
-// 			var newEnd = startLoc.exec( newArc )[1];
-// 			var middleSec = middleLoc.exec( newArc )[1];
-// 			newArc = "M" + newStart + "A" + middleSec + "0 0 0 hello" + newEnd;
-// 	}
-
-// 	arcGroup.append("path")
-//         .attr("class", "hidden_arc")
-//         .attr("id", "hidden_arc"+i)
-//         .attr("d", newArc)
-//         .style("fill", "none");
-// });
-
-
-var title = arcGroup.append("title")
-.text((d) => { return d.parent !== 'null' ? d.data.name : "" });
-
-var text = arcGroup
-	.append("text")
-	.attr("x", 10)
-	.attr("dy", 20)
-	//.attr("dy", (d,i) => { return (d.endAngle > 90 * Math.PI/180 ? 18 : -11); })
-	.append("textPath")
-	//.attr('y', '2em')
-	//.attr("startOffset","50%")
-	//.style("text-anchor","middle")
-	.attr("xlink:href", (d) => {return "#" + d.data.name + "_arc"})
-	.text((d) => { 
-		console.log(d.data.name, d.depth)
-		return d.parent !== 'null' ? d.data.name : "" 
+		if (p.indexOf('L') > -1) {
+			var newArc = firstArcSection.exec(p)[1];
+			newArc = newArc.replace(/,/g , " ");
+			svg.append("path")
+			.attr("class", "h_arc")
+			.style('fill', 'none')
+			.style('stroke', 'none')
+			.attr("d", newArc)
+			.attr('id', i + '_hidden_arc');
+		}
+	})
+	.on('mouseover', function(d) {
+		var total = d.parent ? d.parent.value : d.value;
+		var percent = Math.round(1000 * d.value / total) / 10; // calculate percent
+		tooltip.select('.label').html(d.data.name); // set current label           
+		tooltip.select('.count').html(d.value); // set current count            
+		tooltip.select('.percent').html(percent + '% of direct parent'); // set percent calculated above          
+		tooltip.style('display', 'block'); // set display   
+	})
+	.on('mouseout', function() { // when mouse leaves div                        
+		tooltip.style('display', 'none'); // hide tooltip for that element
+	})
+	.on('mousemove', function(d) { // when mouse moves                  
+		tooltip.style('top', (d3.event.layerY + 10) + 'px'); // always 10px below the cursor
+		tooltip.style('left', (d3.event.layerX + 10) + 'px'); // always 10px to the right of the mouse
 	});
+	
 
+	var text = svg.selectAll('.arcText')
+		.data(partition(root).descendants())
+		.enter()
+		.append("text")
+		.attr('class', 'arcText')
+		.attr('dy', '1.5em')
+		.style('font-size', '.8em')
+		.append('textPath')
+			.attr("startOffset", "50%")
+			.style("text-anchor", "middle")
+			.style("cursor", "pointer")
+			.attr('xlink:href', (d, i) => {return '#' + i + '_hidden_arc'})
+			.text((d)=>{return d.data.name})
+			.on('mouseover', function(d) {
+				var total = d.parent ? d.parent.value : d.value;
+				var percent = Math.round(1000 * d.value / total) / 10; // calculate percent
+				tooltip.select('.label').html(d.data.name); // set current label           
+				tooltip.select('.count').html(d.value); // set current count            
+				tooltip.select('.percent').html(percent + '% of direct parent'); // set percent calculated above          
+				tooltip.style('display', 'block'); // set display   
+			})
+			.on('mouseout', function() { // when mouse leaves div                        
+				tooltip.style('display', 'none'); // hide tooltip for that element
+			})
+			.on('mousemove', function(d) { // when mouse moves                  
+				tooltip.style('top', (d3.event.layerY + 10) + 'px'); // always 10px below the cursor
+				tooltip.style('left', (d3.event.layerX + 10) + 'px'); // always 10px to the right of the mouse
+			})
+			.on("click", click);
 
-//////////////////////////////////////////////////////////////////////////////
+// middle-placed total
+var total = 100;
+
+svg.append("text")
+	.attr("class", "total")
+	.attr("text-anchor", "middle")
+	.attr('font-size', '4em')
+	.attr('y', 20)
+	.text(total + "%");
+
+/////////////////////////////////////////////////////////////////////////
 ///////////////////////////functions/////////////////////////////////////
-//////////////////////////////////////////////////////////////////////////////
-
+/////////////////////////////////////////////////////////////////////////
 
 function click(d) {
+
+	//hides current text
+	//text.transition().duration(100).attr("opacity", 0);
+	
+	//beings animation for arcs
 	svg.transition()
 		.duration(650) // duration of transition
 		.tween("scale", () => {
 			var xd = d3.interpolate(x.domain(), [d.x0, d.x1]),
-				yd = d3.interpolate(y.domain(), [d.y0, 1]),
-				yr = d3.interpolate(y.range(), [d.y0 ? (80) : 0, radius]);
+					yd = d3.interpolate(y.domain(), [d.y0, 1]),
+					yr = d3.interpolate(y.range(), [d.y0 ? (80) : 0, radius]);
 			return (t) => { x.domain(xd(t)); y.domain(yd(t)).range(yr(t)); };
 		})
 		.selectAll("path")
-		.attrTween("d", (d) => { 
-			return () => { return arc(d); }; });
+		.attrTween("d", (d) => {
+			return () => {
+				//arc_path();
+				//text();
+				return arc(d); 
+			}; 
+		});
+		//text.transition().duration(100).attr("opacity", 1);
 	d3.select(".total").text(d.value.toFixed(0) === "100" ? "100%" : d.value.toFixed(2) + "%");
+};
+
+// redraw on disabled category
+function redraw(d) {
+	console.log("function redraw");
+
+	svg.transition()
+		.duration(750)
+		.tween("scale", function () {
+			var xd = d3.interpolate(x.domain(), [d.x0, d.x1]),
+					yd = d3.interpolate(y.domain(), [d.y0, 1]),
+					yr = d3.interpolate(y.range(), [d.y0 ? (radius / 2) : 0, radius]);
+			return function (t) { x.domain(xd(t)); y.domain(yd(t)).range(yr(t)); };
+		})
+		.selectAll("g")
+		.attrTween("d", function (d) { return function () { return arc(d); }; });
+
+		d3.select(".total").text(d.value.toFixed(0) === "100" ? "100%" : d.value.toFixed(2) + "%");
 }
 
-
-// middle total
-var total = 100;
-svg.append("text")
-.attr("class", "total")
-.attr("text-anchor", "middle")
-.attr('font-size', '4em')
-.attr('y', 20)
-.text(total + "%");
+function computeTextRotation(d) {
+  return (x(d.x + d.dx / 2) - Math.PI / 2) / Math.PI * 180;
+}
